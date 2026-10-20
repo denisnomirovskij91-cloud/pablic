@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VØID ARENA — CS2 Servers</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #080a10;
+  --panel: #10141e;
+  --panel2: #151b27;
+  --cyan: #55f6e5;
+  --purple: #8d68ff;
+  --text: #f1f5ff;
+  --muted: #8993a8;
+  --border: #242c3b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 80% 0%, #17203c 0, transparent 36%),
+    var(--bg);
+  font-family: Inter, sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+header {
+  height: 76px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: #080a10dc;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(15px);
+}
+.logo {
+  font: 900 23px Orbitron, sans-serif;
+  letter-spacing: 1px;
+}
+.logo span { color: var(--cyan); }
+nav { display: flex; gap: 28px; color: #a8b1c5; font-size: 13px; }
+nav a:hover { color: var(--cyan); }
+.online {
+  color: var(--cyan);
+  font-size: 12px;
+  background: #55f6e510;
+  border: 1px solid #55f6e533;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+main { max-width: 1180px; margin: auto; padding: 55px 22px; }
+.hero {
+  min-height: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  padding: 35px 0 48px;
+}
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+h1 {
+  font: 900 clamp(36px, 6vw, 66px)/1.12 Orbitron, sans-serif;
+  margin: 18px 0;
+  letter-spacing: -2px;
+}
+h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--cyan);
+}
+.subtitle { color: var(--muted); line-height: 1.8; max-width: 480px; font-size: 14px; }
+.hero-art {
+  width: 285px; height: 230px; flex-shrink: 0;
+  display: grid; place-items: center;
+  position: relative;
+}
+.orb {
+  width: 190px; height: 190px;
+  border-radius: 50%;
+  border: 1px solid #55f6e555;
+  box-shadow: 0 0 55px #55f6e515, inset 0 0 50px #8d68ff18;
+  display: grid; place-items: center;
+  transform: rotate(-20deg);
+}
+.orb::before, .orb::after {
+  content: ""; position: absolute;
+  width: 240px; height: 85px;
+  border: 1px solid #8d68ff99;
+  border-radius: 50%; transform: rotate(35deg);
+}
+.orb::after { transform: rotate(-35deg); border-color: #55f6e566; }
+.orb b { font: 900 66px Orbitron; color: var(--cyan); text-shadow: 0 0 30px #55f6e566; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin-bottom: 42px;
+}
+.stat {
+  background: linear-gradient(135deg,#151b29,#0e121b);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.stat small { display: block; color: var(--muted); margin-bottom: 12px; }
+.stat strong { font: 700 25px Orbitron; }
+.stat em { color: var(--cyan); font-style: normal; font-size: 12px; }
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 15px; margin-bottom: 20px;
+}
+h2 { font: 700 22px Orbitron; margin: 0; }
+.count { color: var(--muted); font-size: 12px; margin-top: 8px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.filter {
+  background: var(--panel); color: #a7b1c5;
+  border: 1px solid var(--border); padding: 10px 15px;
+  border-radius: 7px; font-size: 12px;
+}
+.filter.active, .filter:hover {
+  background: #55f6e512; color: var(--cyan); border-color: #55f6e566;
+}
+.search {
+  width: 100%; padding: 14px 16px;
+  background: var(--panel); border: 1px solid var(--border);
+  color: white; outline: none; border-radius: 8px;
+  margin-bottom: 18px;
+}
+.search:focus { border-color: var(--cyan); }
+.server-list { display: grid; gap: 12px; }
+.server {
+  display: grid;
+  grid-template-columns: 55px minmax(0,1fr) auto auto;
+  gap: 17px; align-items: center;
+  padding: 19px;
+  background: linear-gradient(100deg,#131925,#0e121a);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: .2s;
+}
+.server:hover { border-color: #55f6e566; transform: translateY(-2px); }
+.server-icon {
+  width: 52px; height: 52px; border-radius: 10px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg,#183f49,#292044);
+  font: 700 17px Orbitron; color: var(--cyan);
+}
+.server-name { font-weight: 800; font-size: 15px; }
+.server-meta { color: var(--muted); font-size: 12px; margin-top: 7px; }
+.tag {
+  display: inline-block; color: var(--purple);
+  border: 1px solid #8d68ff44; background: #8d68ff0d;
+  border-radius: 4px; padding: 4px 6px; font-size: 10px;
+  margin-left: 7px; vertical-align: 1px;
+}
+.players { min-width: 100px; }
+.players strong { font-size: 13px; }
+.players small { display: block; color: var(--muted); margin-top: 6px; font-size: 11px; }
+.bar { height: 4px; background: #252c3b; border-radius: 8px; margin-top: 8px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--cyan); }
+.connect {
+  color: #08100f; background: var(--cyan); border: 0;
+  border-radius: 7px; padding: 12px 16px;
+  font-size: 12px; font-weight: 800; white-space: nowrap;
+}
+.connect:hover { box-shadow: 0 0 22px #55f6e544; }
+.empty { color: var(--muted); text-align: center; padding: 35px; }
+.note { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 17px; }
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 70px; padding: 28px 7%;
+  display: flex; justify-content: space-between; gap: 15px;
+  color: var(--muted); font-size: 12px;
+}
+footer b { color: var(--cyan); font-family: Orbitron; }
+@media(max-width:700px) {
+  header { padding: 0 18px; height: 66px; }
+  nav { display: none; }
+  main { padding: 25px 15px; }
+  .hero { min-height: auto; padding: 30px 0; }
+  .hero-art { width: 90px; height: 130px; }
+  .orb { width: 85px; height: 85px; }
+  .orb::before,.orb::after { width: 105px; height: 38px; }
+  .orb b { font-size: 30px; }
+  h1 { letter-spacing: -1px; }
+  .stats { gap: 7px; }
+  .stat { padding: 12px 9px; }
+  .stat strong { font-size: 17px; }
+  .stat small { font-size: 10px; }
+  .server { grid-template-columns: 42px minmax(0,1fr) auto; gap: 10px; padding: 13px 10px; }
+  .server-icon { width: 42px; height: 42px; font-size: 13px; }
+  .server-name { font-size: 12px; }
+  .server-meta { font-size: 10px; }
+  .players { grid-column: 2; min-width: 0; }
+  .connect { grid-column: 3; grid-row: 1 / span 2; padding: 10px; font-size: 10px; }
+  .section-head { align-items: flex-start; }
+  h2 { font-size: 17px; }
+  footer { padding: 25px 15px; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">VØID<span>ARENA</span></a>
+  <nav>
+    <a href="#servers">Серверы</a>
+    <a href="#modes">Режимы</a>
+    <a href="#about">О проекте</a>
+  </nav>
+  <div class="online">● CS2 PLATFORM</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">NEXT LEVEL GAMING</div>
+      <h1>ENTER THE<br><span>VOID.</span></h1>
+      <p class="subtitle">
+        Твоя арена. Твои правила. Твой рейтинг.
+        Выбирай режим, подключайся к игре и доказывай своё превосходство.
+      </p>
+    </div>
+    <div class="hero-art"><div class="orb"><b>V</b></div></div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>СЕРВЕРОВ В КАТАЛОГЕ</small><strong id="total">04</strong><em> / CS2</em></div>
+    <div class="stat"><small>ИГРОКОВ ОНЛАЙН</small><strong id="online">—</strong><em> / DEMO</em></div>
+    <div class="stat"><small>ДОСТУПНОСТЬ</small><strong>24/7</strong><em> / TARGET</em></div>
+  </section>
+
+  <section id="servers">
+    <div class="section-head">
+      <div><h2>SERVER BROWSER</h2><div class="count">Найди свою следующую игру</div></div>
+    </div>
+
+    <div class="filters" id="modes">
+      <button class="filter active" data-mode="all">Все режимы</button>
+      <button class="filter" data-mode="DM">Deathmatch</button>
+      <button class="filter" data-mode="Retake">Retake</button>
+      <button class="filter" data-mode="AWP">AWP</button>
+      <button class="filter" data-mode="Arena">Arena</button>
+    </div>
+
+    <input class="search" id="search" placeholder="⌕  Поиск по названию, карте или режиму...">
+
+    <div class="server-list" id="serverList"></div>
+    <p class="note">
+      Демо-режим: названия, карты и показатели ниже являются примерами.
+      Для отображения реального онлайна нужно подключить источник данных серверов.
+      Кнопки подключения работают после указания настоящих IP-адресов.
+    </p>
+  </section>
+
+  <section id="about" style="margin-top:65px">
+    <div class="eyebrow">BUILT FOR COMPETITION</div>
+    <h2 style="margin-top:15px">ТВОЯ ИГРА. ТВОЯ ЛЕГЕНДА.</h2>
+    <p class="subtitle">VØID ARENA — концепция независимой игровой платформы для сообщества Counter-Strike 2.</p>
+  </section>
+</main>
+
+<footer>
+  <b>VØID ARENA</b>
+  <span>Community project · Not affiliated with Valve</span>
+  <span>© 2026 VØID ARENA</span>
+</footer>
+
+<script>
+const servers = [
+  {name:"VØID | PUBLIC DEATHMATCH", mode:"DM", map:"de_mirage", ip:"", players:18, max:32, icon:"DM"},
+  {name:"VØID | RETAKE ARENA", mode:"Retake", map:"de_ancient", ip:"", players:12, max:20, icon:"RT"},
+  {name:"VØID | AWP LEGENDS", mode:"AWP", map:"awp_lego_2", ip:"", players:9, max:16, icon:"AWP"},
+  {name:"VØID | DUEL ARENA", mode:"Arena", map:"aim_redline", ip:"", players:6, max:12, icon:"1V1"}
+];
+
+let activeMode = "all";
+
+function render() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const filtered = servers.filter(s =>
+    (activeMode === "all" || s.mode === activeMode) &&
+    (s.name + " " + s.mode + " " + s.map).toLowerCase().includes(query)
+  );
+
+  document.getElementById("total").textContent =
+    String(servers.length).padStart(2, "0");
+
+  // Демонстрационные значения, а не реальный онлайн.
+  document.getElementById("online").textContent =
+    String(servers.reduce((sum, s) => sum + s.players, 0)).padStart(2, "0");
+
+  document.getElementById("serverList").innerHTML = filtered.length
+    ? filtered.map(s => `
+      <article class="server">
+        <div class="server-icon">${s.icon}</div>
+        <div>
+          <div class="server-name">${s.name}<span class="tag">${s.mode}</span></div>
+          <div class="server-meta">CS2 &nbsp; • &nbsp; ${s.map}</div>
+          <div class="server-meta">${s.ip ? s.ip : "IP ещё не настроен"}</div>
+        </div>
+        <div class="players">
+          <strong>${s.players} / ${s.max}</strong>
+          <small>DEMO PLAYERS</small>
+          <div class="bar"><span style="width:${Math.min(100,s.players/s.max*100)}%"></span></div>
+        </div>
+        <button class="connect" data-ip="${s.ip}">ИГРАТЬ ↗</button>
+      </article>
+    `).join("")
+    : '<div class="empty">Серверы не найдены. Попробуй другой запрос.</div>';
+}
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    activeMode = button.dataset.mode;
+    render();
+  });
+});
+
+document.getElementById("search").addEventListener("input", render);
+
+document.getElementById("serverList").addEventListener("click", event => {
+  const button = event.target.closest(".connect");
+  if (!button) return;
+
+  const ip = button.dataset.ip;
+  if (!ip) {
+    alert("Добавь настоящий IP:PORT сервера в массив servers.");
+    return;
+  }
+
+  window.location.href = "steam://connect/" + ip;
+});
+
+render();
+</script>
+</body>
+</html>
