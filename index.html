@@ -1,383 +1,577 @@
-from pathlib import Path
 
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VØID ARENA — CS2 Servers</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="VOID ARENA — игровое сообщество Counter-Strike 2. Серверы, режимы и новости.">
+  <title>VOID ARENA — CS2 Gaming Platform</title>
 
-:root {
-  --bg: #080a10;
-  --panel: #10141e;
-  --panel2: #151b27;
-  --cyan: #55f6e5;
-  --purple: #8d68ff;
-  --text: #f1f5ff;
-  --muted: #8993a8;
-  --border: #242c3b;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  color: var(--text);
-  background:
-    radial-gradient(ellipse at 80% 0%, #17203c 0, transparent 36%),
-    var(--bg);
-  font-family: Inter, sans-serif;
-}
-button, input { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
-header {
-  min-height: 76px;
-  padding: 12px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  border-bottom: 1px solid var(--border);
-  background: #080a10dc;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  backdrop-filter: blur(15px);
-}
-.logo {
-  font: 900 23px Orbitron, sans-serif;
-  letter-spacing: 1px;
-}
-.logo span { color: var(--cyan); }
-nav { display: flex; gap: 28px; color: #a8b1c5; font-size: 13px; }
-nav a:hover { color: var(--cyan); }
-.online {
-  color: var(--cyan);
-  font-size: 12px;
-  background: #55f6e510;
-  border: 1px solid #55f6e533;
-  padding: 10px 14px;
-  border-radius: 8px;
-}
-.steam-login {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 16px;
-  border: 1px solid #55f6e566;
-  border-radius: 8px;
-  background: #55f6e510;
-  color: var(--cyan);
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-  transition: .2s;
-}
-.steam-login:hover {
-  background: #55f6e522;
-  box-shadow: 0 0 20px #55f6e522;
-}
-main { max-width: 1180px; margin: auto; padding: 55px 22px; }
-.hero {
-  min-height: 300px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 25px;
-  padding: 35px 0 48px;
-}
-.eyebrow {
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-h1 {
-  font: 900 clamp(36px, 6vw, 66px)/1.12 Orbitron, sans-serif;
-  margin: 18px 0;
-  letter-spacing: -2px;
-}
-h1 span {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--cyan);
-}
-.subtitle { color: var(--muted); line-height: 1.8; max-width: 480px; font-size: 14px; }
-.hero-art {
-  width: 285px; height: 230px; flex-shrink: 0;
-  display: grid; place-items: center;
-  position: relative;
-}
-.orb {
-  width: 190px; height: 190px;
-  border-radius: 50%;
-  border: 1px solid #55f6e555;
-  box-shadow: 0 0 55px #55f6e515, inset 0 0 50px #8d68ff18;
-  display: grid; place-items: center;
-  transform: rotate(-20deg);
-}
-.orb::before, .orb::after {
-  content: ""; position: absolute;
-  width: 240px; height: 85px;
-  border: 1px solid #8d68ff99;
-  border-radius: 50%; transform: rotate(35deg);
-}
-.orb::after { transform: rotate(-35deg); border-color: #55f6e566; }
-.orb b { font: 900 66px Orbitron; color: var(--cyan); text-shadow: 0 0 30px #55f6e566; }
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 12px;
-  margin-bottom: 42px;
-}
-.stat {
-  background: linear-gradient(135deg,#151b29,#0e121b);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-.stat small { display: block; color: var(--muted); margin-bottom: 12px; }
-.stat strong { font: 700 25px Orbitron; }
-.stat em { color: var(--cyan); font-style: normal; font-size: 12px; }
-.section-head {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 15px; margin-bottom: 20px;
-}
-h2 { font: 700 22px Orbitron; margin: 0; }
-.count { color: var(--muted); font-size: 12px; margin-top: 8px; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.filter {
-  background: var(--panel); color: #a7b1c5;
-  border: 1px solid var(--border); padding: 10px 15px;
-  border-radius: 7px; font-size: 12px;
-}
-.filter.active, .filter:hover {
-  background: #55f6e512; color: var(--cyan); border-color: #55f6e566;
-}
-.search {
-  width: 100%; padding: 14px 16px;
-  background: var(--panel); border: 1px solid var(--border);
-  color: white; outline: none; border-radius: 8px;
-  margin-bottom: 18px;
-}
-.search:focus { border-color: var(--cyan); }
-.server-list { display: grid; gap: 12px; }
-.server {
-  display: grid;
-  grid-template-columns: 55px minmax(0,1fr) auto auto;
-  gap: 17px; align-items: center;
-  padding: 19px;
-  background: linear-gradient(100deg,#131925,#0e121a);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: .2s;
-}
-.server:hover { border-color: #55f6e566; transform: translateY(-2px); }
-.server-icon {
-  width: 52px; height: 52px; border-radius: 10px;
-  display: grid; place-items: center;
-  background: linear-gradient(135deg,#183f49,#292044);
-  font: 700 17px Orbitron; color: var(--cyan);
-}
-.server-name { font-weight: 800; font-size: 15px; }
-.server-meta { color: var(--muted); font-size: 12px; margin-top: 7px; }
-.tag {
-  display: inline-block; color: var(--purple);
-  border: 1px solid #8d68ff44; background: #8d68ff0d;
-  border-radius: 4px; padding: 4px 6px; font-size: 10px;
-  margin-left: 7px; vertical-align: 1px;
-}
-.players { min-width: 100px; }
-.players strong { font-size: 13px; }
-.players small { display: block; color: var(--muted); margin-top: 6px; font-size: 11px; }
-.bar { height: 4px; background: #252c3b; border-radius: 8px; margin-top: 8px; overflow: hidden; }
-.bar span { display: block; height: 100%; background: var(--cyan); }
-.connect {
-  color: #08100f; background: var(--cyan); border: 0;
-  border-radius: 7px; padding: 12px 16px;
-  font-size: 12px; font-weight: 800; white-space: nowrap;
-}
-.connect:hover { box-shadow: 0 0 22px #55f6e544; }
-.empty { color: var(--muted); text-align: center; padding: 35px; }
-.note { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 17px; }
-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 70px; padding: 28px 7%;
-  display: flex; justify-content: space-between; gap: 15px;
-  color: var(--muted); font-size: 12px;
-}
-footer b { color: var(--cyan); font-family: Orbitron; }
-@media(max-width:700px) {
-  header { padding: 12px 18px; min-height: 66px; flex-wrap: wrap; }
-  nav { display: none; }
-  .logo { font-size: 18px; }
-  .steam-login { padding: 9px 10px; font-size: 10px; }
-  main { padding: 25px 15px; }
-  .hero { min-height: auto; padding: 30px 0; }
-  .hero-art { width: 90px; height: 130px; }
-  .orb { width: 85px; height: 85px; }
-  .orb::before,.orb::after { width: 105px; height: 38px; }
-  .orb b { font-size: 30px; }
-  h1 { letter-spacing: -1px; }
-  .stats { gap: 7px; }
-  .stat { padding: 12px 9px; }
-  .stat strong { font-size: 17px; }
-  .stat small { font-size: 10px; }
-  .server { grid-template-columns: 42px minmax(0,1fr) auto; gap: 10px; padding: 13px 10px; }
-  .server-icon { width: 42px; height: 42px; font-size: 13px; }
-  .server-name { font-size: 12px; }
-  .server-meta { font-size: 10px; }
-  .players { grid-column: 2; min-width: 0; }
-  .connect { grid-column: 3; grid-row: 1 / span 2; padding: 10px; font-size: 10px; }
-  .section-head { align-items: flex-start; }
-  h2 { font-size: 17px; }
-  footer { padding: 25px 15px; flex-direction: column; }
-}
-</style>
+  <style>
+    :root {
+      --bg: #080b12;
+      --panel: #101622;
+      --panel2: #141d2b;
+      --cyan: #5cecff;
+      --purple: #9c72ff;
+      --text: #f1f5ff;
+      --muted: #929db2;
+      --border: rgba(150, 180, 220, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 10% 0%, #14243b 0, transparent 42%),
+        radial-gradient(ellipse at 90% 25%, #21153b 0, transparent 36%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px max(20px, calc((100% - 1160px) / 2));
+      background: rgba(8, 11, 18, .9);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--cyan); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: color .2s;
+    }
+
+    nav a:hover { color: var(--cyan); }
+
+    .steam-login {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 15px;
+      color: #fff;
+      background: #172d40;
+      border: 1px solid #4a9dcb;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: .2s;
+    }
+
+    .steam-login:hover {
+      background: #244862;
+      box-shadow: 0 0 22px #5cecff20;
+      transform: translateY(-1px);
+    }
+
+    .steam-icon { width: 19px; height: 19px; }
+
+    .hero {
+      min-height: 510px;
+      display: flex;
+      align-items: center;
+      padding: 85px 0;
+    }
+
+    .hero-content { max-width: 760px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: #ffffff06;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: #65f6ae;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #65f6ae;
+    }
+
+    h1 {
+      margin: 24px 0 18px;
+      font-size: clamp(43px, 8vw, 82px);
+      line-height: .99;
+      letter-spacing: -3px;
+      font-weight: 950;
+    }
+
+    h1 span {
+      display: block;
+      color: transparent;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p {
+      max-width: 570px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 13px 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .btn-primary {
+      background: var(--cyan);
+      color: #071019;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 25px #5cecff55;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #ffffff08;
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--purple); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 10px 0 70px;
+    }
+
+    .stat {
+      padding: 22px;
+      border: 1px solid var(--border);
+      background: #ffffff04;
+      border-radius: 14px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 27px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section { padding: 35px 0 75px; }
+
+    .section-heading { margin-bottom: 27px; }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-size: clamp(27px, 4vw, 38px);
+      letter-spacing: -1px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .server-grid, .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .server, .mode, .about-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, #151e2c, #0d121c);
+      border-radius: 15px;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .server:hover, .mode:hover {
+      transform: translateY(-4px);
+      border-color: #5cecff66;
+    }
+
+    .server-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .server-icon, .mode-icon {
+      display: grid;
+      place-items: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: #5cecff12;
+      font-size: 23px;
+    }
+
+    .status {
+      color: #8af3b5;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .server h3, .mode h3 {
+      margin: 18px 0 7px;
+      font-size: 19px;
+    }
+
+    .server p, .mode p, .about-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .server-address {
+      display: block;
+      margin: 18px 0;
+      padding: 10px;
+      border-radius: 8px;
+      background: #05080e;
+      color: var(--cyan);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .server-action {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px;
+      color: var(--text);
+      background: #ffffff08;
+      font-weight: 700;
+    }
+
+    .server-action:hover { border-color: var(--cyan); }
+
+    .mode-icon {
+      width: 52px;
+      height: 52px;
+      font-size: 26px;
+      background: #9c72ff18;
+    }
+
+    .about-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .about-card h3 { margin-top: 0; }
+
+    .about-card p {
+      max-width: 700px;
+      font-size: 14px;
+    }
+
+    .bottom-login {
+      margin-top: 20px;
+      padding: 35px;
+      text-align: center;
+      border: 1px solid #5cecff30;
+      border-radius: 17px;
+      background: linear-gradient(120deg, #112337, #211735);
+    }
+
+    .bottom-login h2 { margin-top: 0; }
+    .bottom-login p { color: var(--muted); }
+
+    footer {
+      padding: 27px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 15px;
+      color: var(--cyan);
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      header { flex-wrap: wrap; gap: 12px; }
+      nav { order: 3; width: 100%; justify-content: center; gap: 20px; }
+      .server-grid, .mode-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { min-height: 430px; }
+    }
+
+    @media (max-width: 540px) {
+      .container { width: calc(100% - 28px); }
+      header { padding: 13px 14px; }
+      .logo { font-size: 19px; }
+      .steam-login { padding: 9px 10px; font-size: 10px; }
+      nav { gap: 15px; }
+      nav a { font-size: 12px; }
+      .hero { padding: 65px 0; }
+      h1 { letter-spacing: -2px; }
+      .hero p { font-size: 15px; }
+      .stats { gap: 8px; margin-bottom: 45px; }
+      .stat { padding: 13px 9px; }
+      .stat strong { font-size: 20px; }
+      .stat span { font-size: 11px; }
+      .server-grid, .mode-grid { grid-template-columns: 1fr; }
+      section { padding-bottom: 50px; }
+      .bottom-login { padding: 25px 15px; }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <a class="logo" href="#home">VØID<span>ARENA</span></a>
 
-<header>
-  <a class="logo" href="#">VØID<span>ARENA</span></a>
-  <nav>
-    <a href="#servers">Серверы</a>
-    <a href="#modes">Режимы</a>
-    <a href="#about">О проекте</a>
-  </nav>
-  <a class="steam-login" href="https://voidarena-steam.denisnomirovskij91.workers.dev/login">
-    Войти через Steam ↗
-  </a>
-</header>
+    <nav aria-label="Основная навигация">
+      <a href="#servers">Серверы</a>
+      <a href="#modes">Режимы</a>
+      <a href="#about">О проекте</a>
+    </nav>
 
-<main>
-  <section class="hero">
-    <div>
-      <div class="eyebrow">NEXT LEVEL GAMING</div>
-      <h1>ENTER THE<br><span>VOID.</span></h1>
-      <p class="subtitle">
-        Твоя арена. Твои правила. Твой рейтинг.
-        Выбирай режим, подключайся к игре и доказывай своё превосходство.
-      </p>
+    <a class="steam-login"
+       href="https://voidarena-steam.denisnomirovskij91.workers.dev/login">
+      <svg class="steam-icon" viewBox="0 0 24 24"
+           fill="currentColor" aria-hidden="true">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm5.1 14.2a3.2 3.2 0 0 1-5.8-1.8l-3.7-1.5a2.7 2.7 0 1 1 1-2.3l3.8 1.5a3.2 3.2 0 0 1 4.7 4.1z"/>
+      </svg>
+      ВОЙТИ ЧЕРЕЗ STEAM
+    </a>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          NEXT LEVEL GAMING
+        </div>
+
+        <h1>ENTER THE <span>VOID.</span></h1>
+
+        <p>
+          VOID ARENA — игровая платформа для сообщества CS2.
+          Находи единомышленников, открывай новые режимы
+          и готовься к следующему раунду.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#servers">СМОТРЕТЬ СЕРВЕРЫ ↗</a>
+          <a class="btn btn-secondary" href="#about">О ПРОЕКТЕ</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container stats">
+      <div class="stat">
+        <strong>CS2</strong>
+        <span>Игровая платформа</span>
+      </div>
+      <div class="stat">
+        <strong>COMMUNITY</strong>
+        <span>Играй вместе</span>
+      </div>
+      <div class="stat">
+        <strong>VOID</strong>
+        <span>Твоя игровая зона</span>
+      </div>
     </div>
-    <div class="hero-art"><div class="orb"><b>V</b></div></div>
-  </section>
 
-  <section class="stats">
-    <div class="stat"><small>СЕРВЕРОВ В КАТАЛОГЕ</small><strong id="total">04</strong><em> / CS2</em></div>
-    <div class="stat"><small>ИГРОКОВ ОНЛАЙН</small><strong id="online">—</strong><em> / DEMO</em></div>
-    <div class="stat"><small>ДОСТУПНОСТЬ</small><strong>24/7</strong><em> / TARGET</em></div>
-  </section>
+    <section class="container" id="servers">
+      <div class="section-heading">
+        <h2>Игровые серверы</h2>
+        <p>Выбери свой следующий игровой опыт.</p>
+      </div>
 
-  <section id="servers">
-    <div class="section-head">
-      <div><h2>SERVER BROWSER</h2><div class="count">Найди свою следующую игру</div></div>
-    </div>
+      <div class="server-grid">
+        <article class="server">
+          <div class="server-top">
+            <div class="server-icon">🎯</div>
+            <span class="status">● VOID ARENA</span>
+          </div>
+          <h3>Competitive</h3>
+          <p>Тактические матчи и командная игра.</p>
+          <span class="server-address">IP сервера не указан</span>
+          <button class="server-action" data-notice="Адрес сервера ещё не настроен.">
+            Информация о сервере
+          </button>
+        </article>
 
-    <div class="filters" id="modes">
-      <button class="filter active" data-mode="all">Все режимы</button>
-      <button class="filter" data-mode="DM">Deathmatch</button>
-      <button class="filter" data-mode="Retake">Retake</button>
-      <button class="filter" data-mode="AWP">AWP</button>
-      <button class="filter" data-mode="Arena">Arena</button>
-    </div>
+        <article class="server">
+          <div class="server-top">
+            <div class="server-icon">⚡</div>
+            <span class="status">● VOID ARENA</span>
+          </div>
+          <h3>Retake</h3>
+          <p>Быстрые раунды, установка и защита точки.</p>
+          <span class="server-address">IP сервера не указан</span>
+          <button class="server-action" data-notice="Адрес сервера ещё не настроен.">
+            Информация о сервере
+          </button>
+        </article>
 
-    <input class="search" id="search" placeholder="⌕  Поиск по названию, карте или режиму...">
+        <article class="server">
+          <div class="server-top">
+            <div class="server-icon">✦</div>
+            <span class="status">● VOID ARENA</span>
+          </div>
+          <h3>Community</h3>
+          <p>Общение, тренировки и совместные игры.</p>
+          <span class="server-address">IP сервера не указан</span>
+          <button class="server-action" data-notice="Адрес сервера ещё не настроен.">
+            Информация о сервере
+          </button>
+        </article>
+      </div>
+      <p class="notice" id="notice" role="status"></p>
+    </section>
 
-    <div class="server-list" id="serverList"></div>
-    <p class="note">
-      Демо-режим: названия, карты и показатели ниже являются примерами.
-      Для отображения реального онлайна нужно подключить источник данных серверов.
-      Кнопки подключения работают после указания настоящих IP-адресов.
-    </p>
-  </section>
+    <section class="container" id="modes">
+      <div class="section-heading">
+        <h2>Выбери свой режим</h2>
+        <p>Разные стили игры — одна арена.</p>
+      </div>
 
-  <section id="about" style="margin-top:65px">
-    <div class="eyebrow">BUILT FOR COMPETITION</div>
-    <h2 style="margin-top:15px">ТВОЯ ИГРА. ТВОЯ ЛЕГЕНДА.</h2>
-    <p class="subtitle">VØID ARENA — концепция независимой игровой платформы для сообщества Counter-Strike 2.</p>
-  </section>
-</main>
+      <div class="mode-grid">
+        <article class="mode">
+          <div class="mode-icon">⌖</div>
+          <h3>Competitive</h3>
+          <p>Классические тактические сражения и работа в команде.</p>
+        </article>
 
-<footer>
-  <b>VØID ARENA</b>
-  <span>Community project · Not affiliated with Valve</span>
-  <span>© 2026 VØID ARENA</span>
-</footer>
+        <article class="mode">
+          <div class="mode-icon">◈</div>
+          <h3>Retake</h3>
+          <p>Оттачивай навыки выхода на точку и её защиты.</p>
+        </article>
 
-<script>
-const servers = [
-  {name:"VØID | PUBLIC DEATHMATCH", mode:"DM", map:"de_mirage", ip:"", players:18, max:32, icon:"DM"},
-  {name:"VØID | RETAKE ARENA", mode:"Retake", map:"de_ancient", ip:"", players:12, max:20, icon:"RT"},
-  {name:"VØID | AWP LEGENDS", mode:"AWP", map:"awp_lego_2", ip:"", players:9, max:16, icon:"AWP"},
-  {name:"VØID | DUEL ARENA", mode:"Arena", map:"aim_redline", ip:"", players:6, max:12, icon:"1V1"}
-];
+        <article class="mode">
+          <div class="mode-icon">⚙</div>
+          <h3>Training</h3>
+          <p>Тренируй прицеливание, движение и игровые навыки.</p>
+        </article>
+      </div>
+    </section>
 
-let activeMode = "all";
+    <section class="container" id="about">
+      <div class="section-heading">
+        <h2>О VOID ARENA</h2>
+        <p>Создаём пространство для игроков.</p>
+      </div>
 
-function render() {
-  const query = document.getElementById("search").value.toLowerCase();
-  const filtered = servers.filter(s =>
-    (activeMode === "all" || s.mode === activeMode) &&
-    (s.name + " " + s.mode + " " + s.map).toLowerCase().includes(query)
-  );
-
-  document.getElementById("total").textContent =
-    String(servers.length).padStart(2, "0");
-
-  // Демонстрационные значения, а не реальный онлайн.
-  document.getElementById("online").textContent =
-    String(servers.reduce((sum, s) => sum + s.players, 0)).padStart(2, "0");
-
-  document.getElementById("serverList").innerHTML = filtered.length
-    ? filtered.map(s => `
-      <article class="server">
-        <div class="server-icon">${s.icon}</div>
+      <div class="about-card">
         <div>
-          <div class="server-name">${s.name}<span class="tag">${s.mode}</span></div>
-          <div class="server-meta">CS2 &nbsp; • &nbsp; ${s.map}</div>
-          <div class="server-meta">${s.ip ? s.ip : "IP ещё не настроен"}</div>
+          <h3>Твоя игра. Твоя команда. Твоя арена.</h3>
+          <p>
+            VOID ARENA — проект, посвящённый Counter-Strike 2.
+            Здесь можно узнавать о режимах, следить за развитием
+            сообщества и находить информацию об игровых серверах.
+            Подключение реальных игровых серверов и статистики
+            будет доступно после отдельной настройки.
+          </p>
         </div>
-        <div class="players">
-          <strong>${s.players} / ${s.max}</strong>
-          <small>DEMO PLAYERS</small>
-          <div class="bar"><span style="width:${Math.min(100,s.players/s.max*100)}%"></span></div>
-        </div>
-        <button class="connect" data-ip="${s.ip}">ИГРАТЬ ↗</button>
-      </article>
-    `).join("")
-    : '<div class="empty">Серверы не найдены. Попробуй другой запрос.</div>';
-}
+        <a class="btn btn-secondary" href="#home">НАВЕРХ ↑</a>
+      </div>
 
-document.querySelectorAll(".filter").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    activeMode = button.dataset.mode;
-    render();
-  });
-});
+      <div class="bottom-login">
+        <h2>Готов войти в VOID?</h2>
+        <p>Используй Steam, чтобы перейти к авторизации.</p>
+        <a class="steam-login"
+           href="https://voidarena-steam.denisnomirovskij91.workers.dev/login">
+          <svg class="steam-icon" viewBox="0 0 24 24"
+               fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm5.1 14.2a3.2 3.2 0 0 1-5.8-1.8l-3.7-1.5a2.7 2.7 0 1 1 1-2.3l3.8 1.5a3.2 3.2 0 0 1 4.7 4.1z"/>
+          </svg>
+          ВОЙТИ ЧЕРЕЗ STEAM
+        </a>
+      </div>
+    </section>
+  </main>
 
-document.getElementById("search").addEventListener("input", render);
+  <footer>
+    © <span id="year"></span> VOID ARENA. Неофициальный проект сообщества.
+    Не связан с Valve Corporation.
+  </footer>
 
-document.getElementById("serverList").addEventListener("click", event => {
-  const button = event.target.closest(".connect");
-  if (!button) return;
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
-  const ip = button.dataset.ip;
-  if (!ip) {
-    alert("Добавь настоящий IP:PORT сервера в массив servers.");
-    return;
-  }
-
-  window.location.href = "steam://connect/" + ip;
-});
-
-render();
-</script>
+    document.querySelectorAll("[data-notice]").forEach(function(button) {
+      button.addEventListener("click", function() {
+        const notice = document.getElementById("notice");
+        notice.textContent = button.dataset.notice;
+        notice.style.display = "block";
+      });
+    });
+  </script>
 </body>
 </html>
-'''
-path = Path("/mnt/data/voidarena-steam-button.html")
-path.write_text(html, encoding="utf-8")
-print(f"Готово: {path}")
