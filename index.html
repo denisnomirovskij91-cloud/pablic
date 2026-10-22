@@ -3,179 +3,282 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VOID ARENA — CS2 Community</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VOID ARENA — Enter the Arena</title>
+<meta name="theme-color" content="#08090e">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg:#05070c;
-  --panel:#0a0e16;
-  --panel2:#0e1420;
-  --red:#ff1744;
-  --text:#f3f5fa;
-  --muted:#8994a8;
-  --border:#1c2738;
+  --bg:#07080d;
+  --panel:#0c1019;
+  --panel2:#111722;
+  --red:#ff234d;
+  --red2:#a80027;
+  --white:#f5f7fc;
+  --muted:#8c96aa;
+  --line:rgba(151,172,207,.14);
+  --green:#38e7a0;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+  margin:0;background:var(--bg);color:var(--white);
+  font-family:Inter,Arial,sans-serif;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+  radial-gradient(ellipse at 75% 0%,rgba(255,35,77,.10),transparent 40%),
+  radial-gradient(ellipse at 20% 75%,rgba(22,66,130,.09),transparent 40%);
 }
 button,a{font:inherit}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid white;outline-offset:3px}
 .sidebar{
-  position:fixed;left:0;top:0;bottom:0;width:205px;
-  background:#080b12;border-right:1px solid var(--border);
-  display:flex;flex-direction:column;z-index:10;
+  width:220px;position:fixed;inset:0 auto 0 0;z-index:20;
+  background:rgba(7,9,15,.96);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;backdrop-filter:blur(20px);
 }
-.logo{
-  padding:25px 20px;font-size:23px;font-weight:900;
-  letter-spacing:1px;border-bottom:1px solid var(--border);
+.brand{
+  padding:25px 22px 23px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;
 }
-.logo span{color:var(--red)}
-.logo small{display:block;font-size:10px;color:var(--muted);margin-top:5px}
-.nav{padding:18px 9px;display:grid;gap:7px}
+.brand-mark{
+  width:42px;height:42px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#ff3158,#95001e);
+  clip-path:polygon(0 0,100% 0,78% 100%,23% 78%);
+  font:900 22px Orbitron;color:white;
+  filter:drop-shadow(0 0 15px #ff174455);
+}
+.brand-name{font:900 18px Orbitron;letter-spacing:1px}
+.brand-name span{color:var(--red)}
+.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:5px}
+.nav-caption{padding:25px 22px 10px;color:#596579;font-size:9px;letter-spacing:2px;font-weight:800}
+.nav{display:grid;gap:6px;padding:0 10px}
 .nav a{
-  padding:14px 13px;border-radius:7px;color:#aeb8c9;
-  display:flex;align-items:center;gap:13px;
-  border-left:3px solid transparent;transition:.2s;
+  padding:14px 12px;display:flex;align-items:center;gap:13px;
+  color:#a0aabd;border:1px solid transparent;border-radius:8px;
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+  font-size:13px;font-weight:600;
 }
-.nav a:hover,.nav a.active{
-  color:white;background:linear-gradient(90deg,#651024,#160b14);
-  border-left-color:var(--red);
+.nav a:hover{background:#151a26;color:white;transform:translateX(3px)}
+.nav a.active{
+  color:white;background:linear-gradient(90deg,#68112655,#20101b55);
+  border-color:#ff234d45;box-shadow:inset 3px 0 var(--red),0 0 25px #ff17440b;
 }
-.nav .ico{width:22px;text-align:center;font-size:19px}
-.side-bottom{margin-top:auto;padding:20px;color:var(--muted);font-size:12px}
-.main{margin-left:205px;min-height:100vh}
+.nav-icon{width:22px;text-align:center;font-size:18px}
+.side-community{margin-top:auto;padding:18px 20px;border-top:1px solid var(--line)}
+.community-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}
+.side-community p{font-size:11px;color:var(--muted);line-height:1.7}
+.socials{display:flex;gap:9px;margin-top:15px}
+.socials span{background:#171d29;padding:8px 10px;border-radius:6px;font-size:11px;color:#bbc4d4}
+.main{margin-left:220px;min-height:100vh}
 .topbar{
-  height:70px;padding:0 32px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:#080b12;position:sticky;top:0;z-index:5;
+  height:70px;position:sticky;top:0;z-index:15;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:rgba(7,8,13,.85);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
 }
-.status{font-size:12px;color:#38e6a3}
+.breadcrumb{font-size:10px;color:var(--muted);letter-spacing:1.5px}
+.breadcrumb b{color:white}
+.top-actions{display:flex;align-items:center;gap:15px}
+.online{font-size:11px;color:var(--green);white-space:nowrap}
 .btn{
-  background:var(--red);color:white;border:0;border-radius:6px;
-  padding:12px 17px;font-weight:bold;transition:.2s;
+  display:inline-flex;justify-content:center;align-items:center;gap:9px;
+  padding:13px 18px;border:1px solid transparent;border-radius:6px;
+  background:linear-gradient(120deg,#ff3158,#d30032);
+  color:white;font-size:11px;font-weight:800;letter-spacing:.5px;
+  transition:transform .2s,box-shadow .2s,filter .2s;
+  box-shadow:0 5px 20px #ff17441a;
 }
-.btn:hover{background:#d90d36;transform:translateY(-1px)}
-.btn.secondary{background:#111827;border:1px solid #29364b}
-.page{display:none;padding:30px;animation:fade .25s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #ff174455;filter:brightness(1.1)}
+.btn.secondary{background:#111723;border-color:#303b50;box-shadow:none;color:#e2e8f2}
+.btn.secondary:hover{border-color:#ff234d88;background:#171b28}
+.btn.small{padding:10px 12px;font-size:10px}
+.page{display:none;padding:27px 32px 45px;animation:pageIn .3s ease}
 .page.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{
-  min-height:320px;border:1px solid var(--border);border-radius:12px;
-  padding:38px;display:flex;align-items:center;
-  background:linear-gradient(90deg,rgba(4,6,11,.98),rgba(4,6,11,.55)),
-  url('https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png') center/cover;
-}
-.eyebrow{color:var(--red);font-size:12px;font-weight:bold;letter-spacing:2px}
-h1{font-size:clamp(38px,5vw,68px);margin:12px 0;letter-spacing:-2px}
-h1 span{color:var(--red)}
-.hero p,.description{color:var(--muted);line-height:1.7}
-.hero-content{max-width:620px}
-.stats{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
-.stat,.card{
-  background:var(--panel);border:1px solid var(--border);border-radius:9px;
-}
-.stat{padding:14px 18px;min-width:125px}
-.stat strong{display:block;font-size:22px}
-.stat small{color:var(--muted);font-size:11px}
-.section-head{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:15px;margin:32px 0 18px;flex-wrap:wrap
-}
-h2{font-size:25px;margin:0}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:10px;letter-spacing:3px;font-weight:800;color:var(--red)}
+h1,h2,h3,p{margin-top:0}
+h1{font:900 clamp(38px,5.3vw,72px)/1.02 Orbitron,sans-serif;letter-spacing:-2px;margin:18px 0}
+h1 span{color:var(--red);text-shadow:0 0 32px #ff234d55}
+h2{font:800 22px Orbitron,sans-serif;letter-spacing:.3px;margin-bottom:0}
 h2 span{color:var(--red)}
-h3{margin:0 0 12px}
+h3{font-size:15px;margin-bottom:8px}
 .muted{color:var(--muted)}
+.description{font-size:13px;color:var(--muted);line-height:1.8}
+.hero{
+  min-height:390px;position:relative;overflow:hidden;border-radius:12px;
+  border:1px solid #3a1c2a;
+  background:
+    linear-gradient(90deg,#07080df7 0%,#07080ddd 42%,#07080d50 100%),
+    linear-gradient(0deg,#07080df0,transparent 55%),
+    url('https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png') center 48%/cover;
+  display:flex;align-items:center;padding:40px;
+}
+.hero:before{
+  content:"";position:absolute;right:-110px;top:-180px;width:430px;height:430px;
+  border:1px solid #ff234d30;transform:rotate(35deg);
+  box-shadow:0 0 0 45px #ff234d08,0 0 0 90px #ff234d05;
+  pointer-events:none;
+}
+.hero:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,#ff234d09 55%,transparent 75%);
+}
+.hero-content{max-width:670px;position:relative;z-index:1}
+.hero-kicker{font-size:11px;letter-spacing:3px;color:#d5dceb}
+.hero h1{margin:17px 0}
+.hero p{max-width:530px;color:#abb4c5;font-size:13px;line-height:1.8}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.stat{
+  min-width:122px;padding:13px 15px;border:1px solid #a4b4d020;
+  background:#080b12bb;border-radius:7px;backdrop-filter:blur(10px)
+}
+.stat strong{display:block;font:800 22px Orbitron}
+.stat small{display:block;margin-top:6px;color:var(--muted);font-size:9px;letter-spacing:1px}
+.stat .red{color:var(--red)}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:35px 0 17px}
+.section-head .more{font-size:11px;color:#c5cddd}
+.section-head .more:hover{color:var(--red)}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
 .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
-.card{padding:20px;min-width:0}
-.card-image{
-  width:100%;height:145px;object-fit:cover;border-radius:6px;
-  margin-bottom:15px;background:#151b27
+.card{
+  min-width:0;background:linear-gradient(145deg,#111723,#090c13);
+  border:1px solid var(--line);border-radius:9px;overflow:hidden;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
 }
-.card p{font-size:13px;color:var(--muted);line-height:1.6}
-.card .price{font-size:25px;font-weight:bold;margin:18px 0}
-.card .btn{width:100%}
+.card:hover{transform:translateY(-4px);border-color:#ff234d70;box-shadow:0 12px 35px #0007,0 0 20px #ff234d0a}
+.card-body{padding:17px}
+.card-image{display:block;width:100%;height:155px;object-fit:cover;background:#141a26}
+.card-label{font-size:9px;letter-spacing:2px;color:var(--red);font-weight:800}
+.card p{font-size:12px;color:var(--muted);line-height:1.7}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:15px}
+.pill{font-size:9px;color:#aeb9ca;padding:6px 8px;background:#171e2b;border-radius:4px}
 .server{
-  display:grid;grid-template-columns:190px 1fr auto;gap:20px;
-  align-items:center;margin-bottom:13px
+  display:grid;grid-template-columns:220px minmax(0,1fr) auto;gap:20px;
+  padding:13px;align-items:center;margin-bottom:13px;
+  background:linear-gradient(110deg,#101722,#080b12);
+  border:1px solid var(--line);border-radius:9px;transition:.2s;
 }
-.server .card-image{height:125px;margin:0}
-.server-info p{margin:7px 0}
-.tag{font-size:11px;color:var(--red);font-weight:bold;letter-spacing:1px}
-.progress{height:6px;background:#1c2635;border-radius:10px;overflow:hidden;margin-top:12px}
-.progress span{height:100%;display:block;background:var(--red);border-radius:10px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
-.tab{
-  padding:10px 15px;background:var(--panel);color:#aeb8c9;
-  border:1px solid var(--border);border-radius:6px
+.server:hover{border-color:#ff234d70}
+.server .card-image{height:135px;border-radius:5px}
+.server-info p{font-size:11px;margin:8px 0;color:var(--muted)}
+.server-info h3{font-size:16px;margin:7px 0}
+.server-actions{display:flex;flex-direction:column;gap:8px;min-width:135px}
+.server-actions .btn{width:100%;padding:12px 9px}
+.progress{height:5px;background:#202838;border-radius:10px;overflow:hidden;margin:12px 0 7px}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#d90031,#ff486a);border-radius:10px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:23px 0}
+.tab{padding:10px 14px;background:#0e1420;border:1px solid var(--line);border-radius:5px;color:#9ca8bb;font-size:11px}
+.tab.active,.tab:hover{background:#631329;border-color:#ff234d;color:white}
+.product-symbol{font-size:35px;margin-bottom:17px;filter:drop-shadow(0 0 13px #ff234d40)}
+.product-price{font:800 25px Orbitron;margin:18px 0}
+.product-price small{font:400 10px Inter;color:var(--muted)}
+.product .btn{width:100%}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+.feature{border:1px solid var(--line);border-radius:8px;padding:18px;background:#0c1019}
+.feature .symbol{font-size:22px;margin-bottom:12px}
+.feature h3{font-size:12px}
+.feature p{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:0}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;background:#0b1018}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:16px;border-bottom:1px solid var(--line);font-size:12px}
+th{background:#111723;color:var(--muted);font-size:10px;letter-spacing:1px}
+tbody tr:hover{background:#ff234d0a}
+td:first-child{color:var(--red);font:800 13px Orbitron}
+.player{display:flex;align-items:center;gap:10px}
+.avatar{width:29px;height:29px;border-radius:6px;background:#232d40;display:grid;place-items:center}
+.news-row{display:grid;grid-template-columns:185px 1fr;gap:18px;padding:15px;margin-bottom:13px}
+.news-row .card-image{height:130px;border-radius:5px}
+.news-date{font-size:10px;color:#718098;margin-top:15px}
+.notice{padding:13px 15px;margin-top:17px;border:1px solid #293345;border-radius:6px;background:#0d121c;color:var(--muted);font-size:11px;line-height:1.8}
+footer{display:flex;justify-content:space-between;gap:15px;padding:23px 32px;border-top:1px solid var(--line);font-size:10px;color:#77839a}
+.toast{
+  position:fixed;bottom:25px;right:25px;z-index:100;max-width:340px;
+  padding:15px 19px;background:#151c28;border:1px solid #ff234d70;
+  border-radius:8px;box-shadow:0 10px 35px #0009;font-size:12px;
+  opacity:0;transform:translateY(15px);pointer-events:none;transition:.25s
 }
-.tab.active{background:var(--red);color:white;border-color:var(--red)}
-.product-icon{font-size:32px;margin-bottom:15px}
-.badge{display:inline-block;background:#25101a;color:#ff6684;padding:5px 8px;border-radius:4px;font-size:11px}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:550px}
-th,td{text-align:left;padding:15px;border-bottom:1px solid var(--border);font-size:13px}
-th{color:var(--muted);font-weight:normal;background:#0b101a}
-td:first-child{color:var(--red);font-weight:bold}
-.news-row{display:grid;grid-template-columns:150px 1fr;gap:18px;margin-bottom:13px}
-.news-row .card-image{height:110px;margin:0}
-.notice{
-  margin-top:15px;padding:13px;background:#111522;border:1px solid var(--border);
-  border-radius:7px;color:var(--muted);font-size:12px;line-height:1.6
-}
-footer{border-top:1px solid var(--border);padding:25px 30px;color:var(--muted);font-size:12px}
-.mobile-menu{display:none}
-@media(max-width:1000px){
+.toast.show{opacity:1;transform:translateY(0)}
+.mobile-nav{display:none}
+@media(max-width:1150px){
+  .sidebar{width:190px}.main{margin-left:190px}
   .grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .server{grid-template-columns:140px 1fr}
-  .server>.btn{grid-column:2}
+  .server{grid-template-columns:170px minmax(0,1fr)}
+  .server-actions{grid-column:2;flex-direction:row}
+  .server-actions .btn{width:auto;flex:1}
 }
-@media(max-width:650px){
+@media(max-width:700px){
   .sidebar{width:64px}
-  .logo{padding:20px 5px;text-align:center;font-size:15px}
-  .logo small,.nav .label,.side-bottom{display:none}
-  .nav{padding:12px 5px}
-  .nav a{justify-content:center;padding:13px 2px}
-  .nav .ico{font-size:20px}
+  .brand{padding:18px 8px;justify-content:center}
+  .brand-mark{width:36px;height:36px;font-size:18px}
+  .brand-text,.nav-caption,.nav-label,.side-community{display:none}
+  .nav{padding:15px 5px}
+  .nav a{justify-content:center;padding:14px 2px}
+  .nav-icon{font-size:19px}
   .main{margin-left:64px}
-  .topbar{height:58px;padding:0 12px;font-size:12px}
-  .page{padding:15px}
-  .hero{padding:23px;min-height:300px}
-  .stats{gap:7px}
-  .stat{padding:10px;min-width:95px}
+  .topbar{height:60px;padding:0 12px}
+  .breadcrumb{font-size:8px;letter-spacing:.5px}
+  .online{display:none}
+  .top-actions .btn{padding:10px;font-size:9px}
+  .page{padding:15px 12px 30px}
+  .hero{padding:23px 18px;min-height:370px;background-position:58% center}
+  h1{font-size:37px;letter-spacing:-1px}
+  .hero p{font-size:12px}
+  .stat{min-width:88px;padding:10px}
+  .stat strong{font-size:16px}
+  .stat small{font-size:8px}
+  .section-head{margin:26px 0 14px}
+  h2{font-size:17px}
   .grid,.grid.four{grid-template-columns:1fr}
-  .server{grid-template-columns:1fr;gap:12px}
-  .server .card-image{height:160px}
-  .server>.btn{grid-column:auto}
-  .news-row{grid-template-columns:95px 1fr;gap:10px}
-  .news-row .card-image{height:95px}
-  h1{font-size:38px}
+  .card-image{height:175px}
+  .server{grid-template-columns:1fr;padding:11px;gap:13px}
+  .server .card-image{height:170px}
+  .server-actions{grid-column:auto;flex-direction:row}
+  .server-actions .btn{font-size:9px}
+  .feature-grid{grid-template-columns:1fr}
+  .news-row{grid-template-columns:95px minmax(0,1fr);gap:11px;padding:10px}
+  .news-row .card-image{height:100px}
+  .news-row .card-body{padding:4px}
+  footer{padding:18px 12px;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
 <body>
 
 <aside class="sidebar">
-  <a href="#home" class="logo">V<span>OID</span><br>ARENA<small>CS2 COMMUNITY</small></a>
+  <a class="brand" href="#home">
+    <span class="brand-mark">V</span>
+    <span class="brand-text"><span class="brand-name">VOID <span>ARENA</span></span><small>CS2 COMMUNITY</small></span>
+  </a>
+  <div class="nav-caption">ОСНОВНОЕ МЕНЮ</div>
   <nav class="nav">
-    <a href="#home" data-route="home"><span class="ico">⌂</span><span class="label">Главная</span></a>
-    <a href="#servers" data-route="servers"><span class="ico">🎮</span><span class="label">Серверы</span></a>
-    <a href="#shop" data-route="shop"><span class="ico">🛒</span><span class="label">Магазин</span></a>
-    <a href="#rating" data-route="rating"><span class="ico">🏆</span><span class="label">Рейтинг</span></a>
-    <a href="#news" data-route="news"><span class="ico">▤</span><span class="label">Новости</span></a>
+    <a href="#home" data-route="home"><span class="nav-icon">⌂</span><span class="nav-label">Главная</span></a>
+    <a href="#servers" data-route="servers"><span class="nav-icon">🎮</span><span class="nav-label">Серверы</span></a>
+    <a href="#shop" data-route="shop"><span class="nav-icon">🛒</span><span class="nav-label">Магазин</span></a>
+    <a href="#rating" data-route="rating"><span class="nav-icon">🏆</span><span class="nav-label">Рейтинг</span></a>
+    <a href="#news" data-route="news"><span class="nav-icon">▤</span><span class="nav-label">Новости</span></a>
   </nav>
-  <div class="side-bottom">VOID ARENA<br>Твоя арена. Твои правила.</div>
+  <div class="side-community">
+    <div><span class="community-dot"></span><b style="font-size:11px">СООБЩЕСТВО</b></div>
+    <p>Твоя арена.<br>Твои правила.</p>
+    <div class="socials"><span>DC</span><span>VK</span><span>▶</span></div>
+  </div>
 </aside>
 
 <div class="main">
   <header class="topbar">
-    <span id="crumb">ГЛАВНАЯ / VOID ARENA</span>
-    <div>
-      <span class="status">● ONLINE</span>
-      <button class="btn secondary" onclick="steamDemo()">Войти через Steam</button>
+    <div class="breadcrumb" id="crumb">VOID ARENA / <b>ГЛАВНАЯ</b></div>
+    <div class="top-actions">
+      <span class="online"><span class="community-dot"></span>СИСТЕМА ОНЛАЙН</span>
+      <button class="btn secondary small" onclick="steamDemo()">◉ Войти через Steam</button>
     </div>
   </header>
 
@@ -184,67 +287,74 @@ footer{border-top:1px solid var(--border);padding:25px 30px;color:var(--muted);f
     <section class="page" id="home">
       <div class="hero">
         <div class="hero-content">
-          <div class="eyebrow">COUNTER-STRIKE 2 COMMUNITY</div>
-          <h1>VOID <span>ARENA</span></h1>
-          <h3>ТВОЯ АРЕНА. ТВОИ ПРАВИЛА.</h3>
-          <p>Играй с друзьями, развивайся и становись лучшим в сообществе VOID ARENA.</p>
-          <div class="stats">
-            <div class="stat"><strong>3</strong><small>СЕРВЕРА</small></div>
-            <div class="stat"><strong>—</strong><small>ИГРОКОВ ОНЛАЙН</small></div>
-            <div class="stat"><strong>60</strong><small>МЕСТ ВСЕГО</small></div>
+          <div class="hero-kicker">COUNTER-STRIKE 2 COMMUNITY</div>
+          <h1>VOID<br><span>ARENA</span></h1>
+          <p>Не просто сервер. Твоя территория. Собирай команду, совершенствуй навыки и докажи, кто достоин первого места.</p>
+          <div class="hero-buttons">
+            <button class="btn" onclick="go('servers')">▶ ВЫБРАТЬ СЕРВЕР</button>
+            <button class="btn secondary" onclick="go('shop')">ОТКРЫТЬ МАГАЗИН ↗</button>
           </div>
-          <button class="btn" onclick="go('servers')">СЕРВЕРЫ →</button>
-          <button class="btn secondary" onclick="go('shop')">ОТКРЫТЬ МАГАЗИН</button>
+          <div class="stats">
+            <div class="stat"><strong>03</strong><small>ИГРОВЫХ СЕРВЕРА</small></div>
+            <div class="stat"><strong>—</strong><small>ИГРОКОВ ОНЛАЙН</small></div>
+            <div class="stat"><strong class="red">60</strong><small>СЛОТОВ ВСЕГО</small></div>
+          </div>
         </div>
       </div>
-      <div class="section-head"><h2>ПОПУЛЯРНЫЕ <span>СЕРВЕРЫ</span></h2><a href="#servers">Все серверы →</a></div>
+
+      <div class="section-head"><h2>ВЫБЕРИ СВОЮ <span>АРЕНУ</span></h2><a class="more" href="#servers">ВСЕ СЕРВЕРЫ →</a></div>
       <div class="grid">
         <article class="card">
           <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png" alt="Mirage" onerror="this.style.display='none'">
-          <div class="tag">MIRAGE #1</div><h3>VOID MIRAGE</h3><p>Classic · Competitive</p>
-          <button class="btn secondary" onclick="go('servers')">Подробнее</button>
+          <div class="card-body"><div class="card-label">01 / COMPETITIVE</div><h3>VOID MIRAGE</h3><p>Классическая битва на одной из самых известных карт CS2.</p><div class="card-bottom"><span class="pill">MIRAGE</span><button class="btn small" onclick="go('servers')">ИГРАТЬ ↗</button></div></div>
         </article>
         <article class="card">
           <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_dust2.png" alt="Dust II" onerror="this.style.display='none'">
-          <div class="tag">DUST II #2</div><h3>VOID DUST II</h3><p>Public · Classic</p>
-          <button class="btn secondary" onclick="go('servers')">Подробнее</button>
+          <div class="card-body"><div class="card-label">02 / CLASSIC</div><h3>VOID DUST II</h3><p>Чистая классика, тактика, стрельба и командная игра.</p><div class="card-bottom"><span class="pill">DUST II</span><button class="btn small" onclick="go('servers')">ИГРАТЬ ↗</button></div></div>
         </article>
         <article class="card">
           <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_inferno.png" alt="Inferno" onerror="this.style.display='none'">
-          <div class="tag">INFERNO #3</div><h3>VOID INFERNO</h3><p>Classic · Competitive</p>
-          <button class="btn secondary" onclick="go('servers')">Подробнее</button>
+          <div class="card-body"><div class="card-label">03 / TACTICAL</div><h3>VOID INFERNO</h3><p>Продумывай каждый шаг и контролируй ключевые точки.</p><div class="card-bottom"><span class="pill">INFERNO</span><button class="btn small" onclick="go('servers')">ИГРАТЬ ↗</button></div></div>
         </article>
+      </div>
+      <div class="feature-grid">
+        <div class="feature"><div class="symbol">⚡</div><h3>БЫСТРЫЙ СТАРТ</h3><p>Выбирай сервер и подключайся через Steam.</p></div>
+        <div class="feature"><div class="symbol">🏆</div><h3>СОРЕВНУЙСЯ</h3><p>Следи за рейтингом и стремись к вершине.</p></div>
+        <div class="feature"><div class="symbol">✦</div><h3>СВОЁ СООБЩЕСТВО</h3><p>Играй с друзьями и участвуй в событиях.</p></div>
       </div>
     </section>
 
     <!-- СЕРВЕРЫ -->
     <section class="page" id="servers">
-      <div class="eyebrow">ИГРАЙ С НАМИ</div>
-      <div class="section-head"><h2>НАШИ <span>СЕРВЕРЫ</span></h2><span class="muted">3 сервера</span></div>
-      <p class="description">Выбери карту, скопируй адрес и подключись к игре.</p>
-      <article class="card server">
+      <div class="eyebrow">FIND YOUR BATTLE</div>
+      <div class="section-head"><h2>ИГРОВЫЕ <span>СЕРВЕРЫ</span></h2><span class="pill">3 СЕРВЕРА</span></div>
+      <p class="description">Выбирай карту и подключайся к игре. Перед запуском проверь, что IP-адрес указан верно.</p>
+
+      <article class="server">
         <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png" alt="Mirage" onerror="this.style.display='none'">
-        <div class="server-info"><div class="tag">MIRAGE</div><h3>VOID MIRAGE #1</h3><p>Classic · Competitive</p><p class="muted">IP: 185.199.88.10:27015</p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн не подключён</small></div>
-        <button class="btn" onclick="copyIP('185.199.88.10:27015')">Копировать IP</button>
+        <div class="server-info"><div class="card-label">COMPETITIVE / 01</div><h3>VOID MIRAGE #1</h3><p>Карта: de_mirage · Режим: Competitive</p><p>IP: <b>185.199.88.10:27015</b></p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн пока не подключён</small></div>
+        <div class="server-actions"><button class="btn" onclick="playServer('185.199.88.10:27015')">▶ ИГРАТЬ</button><button class="btn secondary" onclick="copyIP('185.199.88.10:27015')">▢ КОПИРОВАТЬ IP</button></div>
       </article>
-      <article class="card server">
+
+      <article class="server">
         <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_dust2.png" alt="Dust II" onerror="this.style.display='none'">
-        <div class="server-info"><div class="tag">DUST II</div><h3>VOID DUST II #2</h3><p>Public · Classic</p><p class="muted">IP: 185.199.88.11:27015</p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн не подключён</small></div>
-        <button class="btn" onclick="copyIP('185.199.88.11:27015')">Копировать IP</button>
+        <div class="server-info"><div class="card-label">CLASSIC / 02</div><h3>VOID DUST II #2</h3><p>Карта: de_dust2 · Режим: Classic</p><p>IP: <b>185.199.88.11:27015</b></p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн пока не подключён</small></div>
+        <div class="server-actions"><button class="btn" onclick="playServer('185.199.88.11:27015')">▶ ИГРАТЬ</button><button class="btn secondary" onclick="copyIP('185.199.88.11:27015')">▢ КОПИРОВАТЬ IP</button></div>
       </article>
-      <article class="card server">
+
+      <article class="server">
         <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_inferno.png" alt="Inferno" onerror="this.style.display='none'">
-        <div class="server-info"><div class="tag">INFERNO</div><h3>VOID INFERNO #3</h3><p>Classic · Competitive</p><p class="muted">IP: 185.199.88.12:27015</p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн не подключён</small></div>
-        <button class="btn" onclick="copyIP('185.199.88.12:27015')">Копировать IP</button>
+        <div class="server-info"><div class="card-label">COMPETITIVE / 03</div><h3>VOID INFERNO #3</h3><p>Карта: de_inferno · Режим: Competitive</p><p>IP: <b>185.199.88.12:27015</b></p><div class="progress"><span style="width:0%"></span></div><small class="muted">Онлайн пока не подключён</small></div>
+        <div class="server-actions"><button class="btn" onclick="playServer('185.199.88.12:27015')">▶ ИГРАТЬ</button><button class="btn secondary" onclick="copyIP('185.199.88.12:27015')">▢ КОПИРОВАТЬ IP</button></div>
       </article>
-      <div class="notice">Внимание: указанные IP-адреса — демонстрационные примеры. Замени их на адреса своих реально работающих серверов.</div>
+      <div class="notice">Демо-адреса для макета. Замените их реальными IP и портами ваших CS2-серверов, прежде чем использовать кнопку подключения.</div>
     </section>
 
     <!-- МАГАЗИН -->
     <section class="page" id="shop">
-      <div class="eyebrow">ПРЕДМЕТЫ И ПРИВИЛЕГИИ</div>
-      <div class="section-head"><h2>МАГА<span>ЗИН</span></h2><span class="muted">VOID STORE</span></div>
-      <p class="description">Выбирай привилегии и предметы для своего игрового опыта.</p>
+      <div class="eyebrow">UPGRADE YOUR GAME</div>
+      <div class="section-head"><h2>VOID <span>STORE</span></h2><span class="pill">МАГАЗИН</span></div>
+      <p class="description">Привилегии, коллекции и предметы в одном месте.</p>
       <div class="tabs">
         <button class="tab active" onclick="filterShop('all',this)">Все товары</button>
         <button class="tab" onclick="filterShop('vip',this)">Привилегии</button>
@@ -252,87 +362,88 @@ footer{border-top:1px solid var(--border);padding:25px 30px;color:var(--muted);f
         <button class="tab" onclick="filterShop('skins',this)">Скины</button>
       </div>
       <div class="grid four" id="products">
-        <article class="card product" data-category="vip"><div class="product-icon">👑</div><div class="tag">VIP</div><h3>VIP</h3><p>Дополнительные возможности на сервере.</p><div class="price">100 ₽ <small class="muted">/ месяц</small></div><button class="btn" onclick="buyDemo('VIP')">Подробнее</button></article>
-        <article class="card product" data-category="vip"><div class="product-icon">💎</div><div class="tag">PREMIUM</div><h3>PREMIUM</h3><p>Расширенные игровые привилегии.</p><div class="price">200 ₽ <small class="muted">/ месяц</small></div><button class="btn" onclick="buyDemo('PREMIUM')">Подробнее</button></article>
-        <article class="card product" data-category="vip"><div class="product-icon">🔥</div><div class="tag">LEGEND</div><h3>LEGEND</h3><p>Максимальный демонстрационный набор.</p><div class="price">400 ₽ <small class="muted">/ месяц</small></div><button class="btn" onclick="buyDemo('LEGEND')">Подробнее</button></article>
-        <article class="card product" data-category="cases"><div class="product-icon">📦</div><div class="tag">CASE</div><h3>Кейсы</h3><p>Раздел для предметов и коллекций.</p><div class="price">От 49 ₽</div><button class="btn" onclick="buyDemo('Кейсы')">Подробнее</button></article>
-        <article class="card product" data-category="skins"><div class="product-icon">🎨</div><div class="tag">SKINS</div><h3>Скины</h3><p>Каталог косметических предметов.</p><div class="price">Скоро</div><button class="btn secondary" onclick="buyDemo('Скины')">Подробнее</button></article>
+        <article class="card product" data-category="vip"><div class="card-body"><div class="product-symbol">♛</div><div class="card-label">STARTER</div><h3>VIP</h3><p>Базовые привилегии и особый статус в сообществе.</p><div class="product-price">100 ₽ <small>/ месяц</small></div><button class="btn" onclick="buyDemo('VIP')">ПОДРОБНЕЕ ↗</button></div></article>
+        <article class="card product" data-category="vip"><div class="card-body"><div class="product-symbol">💎</div><div class="card-label">ENHANCED</div><h3>PREMIUM</h3><p>Расширенный набор игровых привилегий.</p><div class="product-price">200 ₽ <small>/ месяц</small></div><button class="btn" onclick="buyDemo('PREMIUM')">ПОДРОБНЕЕ ↗</button></div></article>
+        <article class="card product" data-category="vip"><div class="card-body"><div class="product-symbol">🔥</div><div class="card-label">ELITE</div><h3>LEGEND</h3><p>Максимальный демонстрационный набор.</p><div class="product-price">400 ₽ <small>/ месяц</small></div><button class="btn" onclick="buyDemo('LEGEND')">ПОДРОБНЕЕ ↗</button></div></article>
+        <article class="card product" data-category="cases"><div class="card-body"><div class="product-symbol">▣</div><div class="card-label">COLLECTION</div><h3>КЕЙСЫ</h3><p>Раздел для игровых коллекций и предметов.</p><div class="product-price">49 ₽ <small>и выше</small></div><button class="btn" onclick="buyDemo('Кейсы')">ОТКРЫТЬ ↗</button></div></article>
+        <article class="card product" data-category="skins"><div class="card-body"><div class="product-symbol">◈</div><div class="card-label">COSMETICS</div><h3>СКИНЫ</h3><p>Каталог косметических предметов.</p><div class="product-price">СКОРО</div><button class="btn secondary" onclick="buyDemo('Скины')">ПОСМОТРЕТЬ</button></div></article>
       </div>
-      <div class="notice">Магазин пока демонстрационный. Оплата, выдача товаров и проверка покупок не подключены. Не вводи платёжные данные на этой версии.</div>
+      <div class="notice">Это демонстрационный магазин. Оплата, выдача предметов и проверка покупок не подключены. Цены — примеры оформления, не предложение к оплате.</div>
     </section>
 
     <!-- РЕЙТИНГ -->
     <section class="page" id="rating">
-      <div class="eyebrow">ЛИДЕРЫ СООБЩЕСТВА</div>
-      <div class="section-head"><h2>РЕЙТИНГ <span>ИГРОКОВ</span></h2><span class="badge">ДЕМО-ДАННЫЕ</span></div>
-      <p class="description">Таблица лидеров VOID ARENA. Реальная статистика появится после подключения серверов.</p>
-      <div class="card table-wrap">
-        <table>
-          <thead><tr><th>#</th><th>Игрок</th><th>Убийства</th><th>Смерти</th><th>K/D</th><th>Очки</th></tr></thead>
-          <tbody>
-            <tr><td>01</td><td>VOID_Player</td><td>0</td><td>0</td><td>—</td><td>0</td></tr>
-            <tr><td>02</td><td>Shadow</td><td>0</td><td>0</td><td>—</td><td>0</td></tr>
-            <tr><td>03</td><td>Phantom</td><td>0</td><td>0</td><td>—</td><td>0</td></tr>
-            <tr><td>04</td><td>Raven</td><td>0</td><td>0</td><td>—</td><td>0</td></tr>
-            <tr><td>05</td><td>Ghost</td><td>0</td><td>0</td><td>—</td><td>0</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="notice">Имена и показатели выше — примеры интерфейса, не реальные игроки или статистика.</div>
+      <div class="eyebrow">PROVE YOUR SKILL</div>
+      <div class="section-head"><h2>ТАБЛИЦА <span>ЛИДЕРОВ</span></h2><span class="pill">ДЕМО-ДАННЫЕ</span></div>
+      <p class="description">Путь к вершине начинается с первой игры. Реальная статистика появится после подключения игровых серверов.</p>
+      <div class="tabs"><button class="tab active">Общий рейтинг</button><button class="tab" onclick="toast('Рейтинг по серверам появится после подключения статистики.')">По серверам</button><button class="tab" onclick="toast('Сезонная таблица пока не подключена.')">Сезон</button></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>МЕСТО</th><th>ИГРОК</th><th>УБИЙСТВА</th><th>СМЕРТИ</th><th>K/D</th><th>ОЧКИ</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td><div class="player"><span class="avatar">♛</span>VOID_Player</div></td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+          <tr><td>02</td><td><div class="player"><span class="avatar">◈</span>Shadow</div></td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+          <tr><td>03</td><td><div class="player"><span class="avatar">✦</span>Phantom</div></td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+          <tr><td>04</td><td><div class="player"><span class="avatar">◉</span>Raven</div></td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+          <tr><td>05</td><td><div class="player"><span class="avatar">✧</span>Ghost</div></td><td>—</td><td>—</td><td>—</td><td>0</td></tr>
+        </tbody>
+      </table></div>
+      <div class="notice">Имена игроков приведены как примеры. Авторизация Steam и настоящая статистика не подключены.</div>
     </section>
 
     <!-- НОВОСТИ -->
     <section class="page" id="news">
-      <div class="eyebrow">СОБЫТИЯ СООБЩЕСТВА</div>
-      <div class="section-head"><h2>ПОСЛЕДНИЕ <span>НОВОСТИ</span></h2></div>
+      <div class="eyebrow">WHAT'S HAPPENING</div>
+      <div class="section-head"><h2>НОВОСТИ <span>АРЕНЫ</span></h2><span class="pill">COMMUNITY</span></div>
+      <p class="description">Обновления, события и всё, что происходит в VOID ARENA.</p>
       <article class="card news-row">
-        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png" alt="CS2" onerror="this.style.display='none'">
-        <div><div class="tag">ОБНОВЛЕНИЕ</div><h3>Добро пожаловать в VOID ARENA</h3><p>Мы развиваем игровой портал и готовим новые возможности для сообщества.</p><small class="muted">VOID ARENA</small></div>
+        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_mirage.png" alt="CS2 Mirage" onerror="this.style.display='none'">
+        <div class="card-body"><div class="card-label">01 / COMMUNITY</div><h3>Добро пожаловать в VOID ARENA</h3><p>Игровой портал развивается. Здесь будут публиковаться обновления и события сообщества.</p><div class="news-date">VOID ARENA · АНОНС</div></div>
       </article>
       <article class="card news-row">
-        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_dust2.png" alt="CS2" onerror="this.style.display='none'">
-        <div><div class="tag">СЕРВЕРЫ</div><h3>Страница серверов</h3><p>В этом разделе будут собраны адреса, карты и данные об онлайне серверов.</p><small class="muted">VOID ARENA</small></div>
+        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_dust2.png" alt="CS2 Dust II" onerror="this.style.display='none'">
+        <div class="card-body"><div class="card-label">02 / SERVERS</div><h3>Игровые серверы</h3><p>Страница серверов собрана в одном месте. Данные реального онлайна подключаются отдельно.</p><div class="news-date">VOID ARENA · СЕРВЕРЫ</div></div>
       </article>
       <article class="card news-row">
-        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_inferno.png" alt="CS2" onerror="this.style.display='none'">
-        <div><div class="tag">СООБЩЕСТВО</div><h3>Магазин и рейтинг</h3><p>В следующих обновлениях можно подключить реальные данные и функции.</p><small class="muted">VOID ARENA</small></div>
+        <img class="card-image" src="https://raw.githubusercontent.com/rainerstudios/game-map-images/main/cs2/de_inferno.png" alt="CS2 Inferno" onerror="this.style.display='none'">
+        <div class="card-body"><div class="card-label">03 / UPDATES</div><h3>Магазин и рейтинг</h3><p>Каталог и таблица лидеров готовы как интерфейс. Следующий этап — интеграция реальных данных.</p><div class="news-date">VOID ARENA · ОБНОВЛЕНИЕ</div></div>
       </article>
     </section>
   </main>
-  <footer>VOID ARENA © 2026 · CS2 COMMUNITY <span style="float:right">ТВОЯ АРЕНА. ТВОИ ПРАВИЛА.</span></footer>
+  <footer><span>VOID ARENA © 2026 · CS2 COMMUNITY</span><span>ТВОЯ АРЕНА. ТВОИ ПРАВИЛА.</span></footer>
 </div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const titles = {
-  home:"ГЛАВНАЯ / VOID ARENA",
-  servers:"СЕРВЕРЫ / VOID ARENA",
-  shop:"МАГАЗИН / VOID ARENA",
-  rating:"РЕЙТИНГ / VOID ARENA",
-  news:"НОВОСТИ / VOID ARENA"
+const pageNames={
+  home:"ГЛАВНАЯ",
+  servers:"СЕРВЕРЫ",
+  shop:"МАГАЗИН",
+  rating:"РЕЙТИНГ",
+  news:"НОВОСТИ"
 };
 
 function go(route){
-  if(!titles[route]) route="home";
-  if(location.hash==="#"+route){
-    renderRoute();
-  }else{
-    location.hash=route;
-  }
+  if(!pageNames[route]) route="home";
+  if(location.hash==="#"+route) renderRoute();
+  else location.hash=route;
 }
 
 function renderRoute(){
-  let route=location.hash.replace("#","")||"home";
-  if(!titles[route]) route="home";
+  const route=location.hash.slice(1);
+  const current=pageNames[route]?route:"home";
 
-  document.querySelectorAll(".page").forEach(page=>{
-    page.classList.toggle("active",page.id===route);
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.toggle("active",p.id===current);
   });
 
-  document.querySelectorAll(".nav a").forEach(link=>{
-    link.classList.toggle("active",link.dataset.route===route);
+  document.querySelectorAll(".nav a").forEach(a=>{
+    a.classList.toggle("active",a.dataset.route===current);
   });
 
-  document.getElementById("crumb").textContent=titles[route];
+  document.getElementById("crumb").innerHTML=
+    'VOID ARENA / <b>'+pageNames[current]+'</b>';
+
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -340,28 +451,48 @@ window.addEventListener("hashchange",renderRoute);
 renderRoute();
 
 function filterShop(category,button){
-  document.querySelectorAll(".tabs .tab").forEach(tab=>tab.classList.remove("active"));
+  document.querySelectorAll("#shop .tab").forEach(t=>t.classList.remove("active"));
   button.classList.add("active");
-  document.querySelectorAll(".product").forEach(product=>{
-    product.style.display=(category==="all"||product.dataset.category===category)?"":"none";
+  document.querySelectorAll(".product").forEach(card=>{
+    card.style.display=category==="all"||card.dataset.category===category?"":"none";
   });
+}
+
+let toastTimer;
+function toast(message){
+  const box=document.getElementById("toast");
+  box.textContent=message;
+  box.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>box.classList.remove("show"),3500);
 }
 
 async function copyIP(ip){
   try{
     await navigator.clipboard.writeText(ip);
-    alert("IP скопирован: "+ip+"\nПроверь, что адрес принадлежит действующему серверу.");
+    toast("IP скопирован: "+ip);
   }catch(e){
-    prompt("Скопируй IP сервера:",ip);
+    const input=document.createElement("textarea");
+    input.value=ip;
+    document.body.appendChild(input);
+    input.select();
+    const ok=document.execCommand("copy");
+    input.remove();
+    toast(ok?"IP скопирован: "+ip:"Не удалось скопировать. IP: "+ip);
   }
 }
 
+function playServer(ip){
+  toast("Открываем Steam. Если подключения нет, проверь IP сервера.");
+  window.location.href="steam://connect/"+ip;
+}
+
 function steamDemo(){
-  alert("Вход через Steam пока не подключён. Для настоящей авторизации нужен серверный компонент.");
+  toast("Steam-авторизация ещё не подключена.");
 }
 
 function buyDemo(item){
-  alert("Товар «"+item+"» — демонстрация интерфейса. Оплата и выдача товара пока не подключены.");
+  toast(item+": магазин пока демонстрационный. Оплата не подключена.");
 }
 </script>
 </body>
