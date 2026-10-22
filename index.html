@@ -1,5 +1,6 @@
+from pathlib import Path
 
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -31,11 +32,12 @@ button, input { font: inherit; }
 button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 header {
-  height: 76px;
-  padding: 0 7%;
+  min-height: 76px;
+  padding: 12px 7%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   border-bottom: 1px solid var(--border);
   background: #080a10dc;
   position: sticky;
@@ -57,6 +59,25 @@ nav a:hover { color: var(--cyan); }
   border: 1px solid #55f6e533;
   padding: 10px 14px;
   border-radius: 8px;
+}
+.steam-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid #55f6e566;
+  border-radius: 8px;
+  background: #55f6e510;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: .2s;
+}
+.steam-login:hover {
+  background: #55f6e522;
+  box-shadow: 0 0 20px #55f6e522;
 }
 main { max-width: 1180px; margin: auto; padding: 55px 22px; }
 .hero {
@@ -188,8 +209,10 @@ footer {
 }
 footer b { color: var(--cyan); font-family: Orbitron; }
 @media(max-width:700px) {
-  header { padding: 0 18px; height: 66px; }
+  header { padding: 12px 18px; min-height: 66px; flex-wrap: wrap; }
   nav { display: none; }
+  .logo { font-size: 18px; }
+  .steam-login { padding: 9px 10px; font-size: 10px; }
   main { padding: 25px 15px; }
   .hero { min-height: auto; padding: 30px 0; }
   .hero-art { width: 90px; height: 130px; }
@@ -222,7 +245,9 @@ footer b { color: var(--cyan); font-family: Orbitron; }
     <a href="#modes">Режимы</a>
     <a href="#about">О проекте</a>
   </nav>
-  <div class="online">● CS2 PLATFORM</div>
+  <a class="steam-login" href="https://voidarena-steam.denisnomirovskij91.workers.dev/login">
+    Войти через Steam ↗
+  </a>
 </header>
 
 <main>
@@ -352,3 +377,7 @@ render();
 </script>
 </body>
 </html>
+'''
+path = Path("/mnt/data/voidarena-steam-button.html")
+path.write_text(html, encoding="utf-8")
+print(f"Готово: {path}")
